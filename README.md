@@ -1,7 +1,5 @@
-see https://github.com/oskarisGitAcc/fullStackWebDevelopment for frontend
-part as well as cleaner commit structure for part 3a. The whole part is
-put to single commit in the beginning of this repo.
+Frontend is located at
+https://github.com/oskarisGitAcc/fullStackWebDevelopment
 
-Commands:
-
-- fly deploy = Whenever you make changes to the application, you can take the new version to production with a command
+The app is deployed online on:
+https://fullstack-part3-backend.fly.dev/

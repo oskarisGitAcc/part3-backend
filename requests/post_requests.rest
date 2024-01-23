@@ -14,3 +14,21 @@ content-type: application/json
     "name": "Oskari Pyykkönen",
     "number": ""
 }
+
+###
+POST https://fullstack-part3-backend.fly.dev/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Oskari Pyykkönen", 
+    "number": "0401212121"
+}
+
+###
+POST https://fullstack-part3-backend.fly.dev/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Oskari Pyykkönen",
+    "number": ""
+}
