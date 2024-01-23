@@ -1,0 +1,16 @@
+POST http://localhost:3001/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Oskari Pyykkönen", 
+    "number": "0401212121"
+}
+
+###
+POST http://localhost:3001/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Oskari Pyykkönen",
+    "number": ""
+}
