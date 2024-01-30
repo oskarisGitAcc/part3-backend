@@ -49,7 +49,7 @@ app.get('/info', (request, response) => {
   const infoResponse = `<p>Phonebook has info for ${numberOfEntries} people</p>
                        <p>${requestTime}</p>`;
 
-  res.send(infoResponse);
+  response.send(infoResponse);
 });
 
 app.get('/api/persons/:id', (request, response) => {
@@ -76,23 +76,15 @@ app.post('/api/persons', (request, response) => {
     });
   }
 
-  const duplicateName = persons.find(person => person.name === body.name);
-
-  if (duplicateName) {
-    return response.status(400).json({
-      error: 'name must be unique',
-    });
-  }
-
-  const person = {
+  const person = new Person({
     id: generateUniqueId(),
     name: body.name,
     number: body.number
-  };
+  });
 
-  persons = persons.concat(person);
-
-  response.json(person);
+  person.save().then(savedPerson => {
+    response.json(savedPerson);
+  });
 });
 
 app.delete('/api/persons/:id', (request, response) => {
