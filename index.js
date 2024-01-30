@@ -1,16 +1,18 @@
+require('dotenv').config()
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
-const cors = require('cors')
+const cors = require('cors');
+const Person = require('./models/person')
 
 morgan.token('postData', (req) => {
   return JSON.stringify(req.body);
 });
 
-app.use(cors())
+app.use(cors());
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postData'));
 app.use(express.json());
-app.use(express.static('dist'))
+app.use(express.static('dist'));
 
 let persons = [
   { 
@@ -35,11 +37,13 @@ let persons = [
   }
 ];
 
-app.get('/api/persons', (req, res) => {
-  res.json(persons);
+app.get('/api/persons', (request, response) => {
+  Person.find({}).then(persons => {
+    response.json(persons)
+  });
 });
 
-app.get('/info', (req, res) => {
+app.get('/info', (request, response) => {
   const requestTime = new Date();
   const numberOfEntries = persons.length;
   const infoResponse = `<p>Phonebook has info for ${numberOfEntries} people</p>
@@ -98,7 +102,7 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end();
 });
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 });
