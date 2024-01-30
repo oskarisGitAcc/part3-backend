@@ -28,42 +28,21 @@ const errorHandler = (error, request, response, next) => {
   next(error);
 };
 
-let persons = [
-  { 
-    "id": 1,
-    "name": "Arto Hellas", 
-    "number": "040-123456"
-  },
-  { 
-    "id": 2,
-    "name": "Ada Lovelace", 
-    "number": "39-44-5323523"
-  },
-  { 
-    "id": 3,
-    "name": "Dan Abramov", 
-    "number": "12-43-234345"
-  },
-  { 
-    "id": 4,
-    "name": "Mary Poppendieck", 
-    "number": "39-23-6423122"
-  }
-];
-
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(persons => {
-    response.json(persons)
+    response.json(persons);
   });
 });
 
-app.get('/info', (request, response) => {
-  const requestTime = new Date();
-  const numberOfEntries = persons.length;
-  const infoResponse = `<p>Phonebook has info for ${numberOfEntries} people</p>
-                       <p>${requestTime}</p>`;
-
-  response.send(infoResponse);
+app.get('/info', (request, response, next) => {
+  Person.countDocuments({})
+    .then(count => {
+      const requestTime = new Date();
+      const infoResponse = `<p>Phonebook has info for ${count} people</p>
+                           <p>${requestTime}</p>`;
+      response.send(infoResponse);
+    })
+    .catch(error => next(error));
 });
 
 app.get('/api/persons/:id', (request, response, next) => {
